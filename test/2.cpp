@@ -1,5 +1,3 @@
-//코드 삭제됨
-
 /*
 전구 위치 정렬하고
 
@@ -25,3 +23,46 @@ float 벡터 만들어서
 또 다
 그거 계산 따로 해서 비교해줘야함
 */
+//맞춘건데 코드 날린거라
+//생각나는대로 다시 짜봄
+//확인 안해봤음
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <functional>
+
+using namespace std;
+
+int solution(int l, vector<int> v) {
+	if (v.size() == 1) {
+		int first, end;
+		first = v[0];
+		end = l - v[0];
+		if (first < end)
+			return end;
+		else
+			return first;
+	}
+
+	sort(v.begin(), v.end());
+
+	vector<float> distance;
+
+	vector<int> first_end;
+	first_end.push_back(v[0]);
+	first_end.push_back(l - v[v.size() - 1]);
+	sort(first_end.begin(), first_end.end());
+
+	for (int i = 0; i < v.size() - 1; i++) {
+		distance.push_back(v[i + 1] - v[i]);
+	}
+	sort(distance.begin(), distance.end(), greater<int>());
+	int answer = distance[0] / 2 + 0.5;
+
+	if (answer < first_end[1])
+		return first_end[1];
+	else
+		return answer;
+}
