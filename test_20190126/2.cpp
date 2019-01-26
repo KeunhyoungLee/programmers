@@ -36,6 +36,7 @@ float 벡터 만들어서
 using namespace std;
 
 int solution(int l, vector<int> v) {
+	//전구 1개일 때 예외처리
 	if (v.size() == 1) {
 		int first, end;
 		first = v[0];
@@ -45,22 +46,29 @@ int solution(int l, vector<int> v) {
 		else
 			return first;
 	}
-
-	sort(v.begin(), v.end());
-
+	
+	//1개 아닐 때 정렬하고
+ 	sort(v.begin(), v.end());
+	//거리가 소수점(0.5씩) 나올수도 있어서 float 벡터 선언
 	vector<float> distance;
-
+	//인접한 전구끼리 빼서 전구 간의 거리 구함
+	for (int i = 0; i < v.size() - 1; i++) {
+		distance.push_back(v[i + 1] - v[i]);
+	}
+	//내림차순 정렬
+	sort(distance.begin(), distance.end(), greater<int>());
+	//가장 큰 거리에 계산식 대입
+	//홀수일 때 0.5 더해서 값 구하고, 짝수일때 0.5더해도 answer가 int라 0.5 버려짐 
+	int answer = distance[0] / 2 + 0.5;
+	
+	//예외처리
+	//젤 처음과 끝 전구 --> 길 시작과 끝 간의 거리 구하기
 	vector<int> first_end;
 	first_end.push_back(v[0]);
 	first_end.push_back(l - v[v.size() - 1]);
 	sort(first_end.begin(), first_end.end());
-
-	for (int i = 0; i < v.size() - 1; i++) {
-		distance.push_back(v[i + 1] - v[i]);
-	}
-	sort(distance.begin(), distance.end(), greater<int>());
-	int answer = distance[0] / 2 + 0.5;
-
+	
+	//길 처음,끝 중 먼 거리와 
 	if (answer < first_end[1])
 		return first_end[1];
 	else
