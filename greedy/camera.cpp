@@ -24,11 +24,9 @@ using namespace std;
 
 /*
 bool cmp(vector<int> a, vector<int> b){
-    if(a[0]<b[0])
-        return true;
-    else
-        false;
-}*/
+    return a[1]<b[1];
+}
+    */
 
 int solution(vector<vector<int>> routes) {
     int answer = 0;
